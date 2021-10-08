@@ -1,0 +1,152 @@
+<hta:application>
+<html>
+<meta charset=utf-8>
+<title>poly</title>
+<style>
+body{background-color:#202820;color:#ffffff;font-family:Courier;margin-left:20px;}
+h1{background-color:#67a352;padding:32px;font-size:40px;padding-left:18px;margin-left:-20px;}
+h2{background-color:#67a352;padding:20px;margin-top:30px;margin-left:-20px;}
+b{font-size:20px;padding-left:12px;padding-right:12px;}
+pre{border:1px solid #181818;padding:12px;background-color:#262e26;margin-left:-20px;}
+a{color:#8888bb;}
+</style>
+<body>
+<h1>poly</h1>
+Esse é um software resignadamente educacional e os jogos resultantes tem limitações.<br><br>
+
+Bons softwares geralmente exploram alguns limites e esse é complacente.<br><br>
+
+O objetivo desse software é incentivar a comunidade brasileira de jogos.<br><br>
+
+Esse software atua na divulgação do fato que escrever código é legal.
+
+<h2>A Linguagem C</h2>
+A linguagem C tem regras.<br>
+Esse software vai apresentar dispiscentemente algumas delas.
+
+<h2>Editar Código</h2>
+Para escrever código usa-se algum software de edição.<br>
+Para criar os joguinhos você deve usar algum deles.
+
+<h2>Compilar</h2>
+Para gerar o arquivo executável <b>(o jogo)</b> basta executar o arquivo 'compila'<br><br>
+
+Esse arquivo envia o código-fonte do arquivo <b>game.c</b> para o compilador tcc (Tiny C Compiler).<br><br>
+
+No desenvolvimento de software é comum errar e tentar de novo.<br>
+Caso haja algum erro no código o 'compila' irá falhar.<br>
+As regras da linguagem C são muitas e são rígidas.<br><br>
+
+O compila.bat exibe uma descrição do erro (em inglês) caso o executável não possa ser gerado.<br>
+Procurar na internet pela <b>descrição do erro</b> exibida é uma boa iniciativa.
+
+<h2>Codigo Mínimo</h2>
+<pre>#include "poly/poly.h"
+main(){
+	setvideomode();
+	while(!keystate(KEY_ESCAPE)){
+
+		waitvbl();
+	}
+}</pre>
+
+<h2>Desenhando o cenário</h2>
+Para colocar na tela o background do jogo é possível usar a função fillpoly.
+
+<pre>
+setcolor(15);
+int background[8]={20,30,300,30,300,100,20,100};
+fillpoly(background,4);</pre>
+
+<b>Setcolor</b> é a função que define a cor cinza claro para desenhar o background do jogo:
+<pre>		setcolor(15);</pre>
+
+Uma variável chamada <b>background</b> amazena 8 números correspondentes a 4 coordenadas (x,y) do background<br><br>
+(20,30)&nbsp; = canto superior esquerdo<br>
+(300,30) = canto superior direito<br>
+(300,100)= canto inferior direito<br>
+(20,100) = canto inferior esquerdo
+<pre>		int background[8]={20,30,300,30,300,100,20,100};</pre>
+
+O comando/função/método <b>fillpoly</b> preenche na tela o retângulo descrito nessas 4 coordenadas.
+<pre>		fillpoly(background,4);</pre>
+
+<h2>waitvbl</h2>
+A função <b>waitvbl</b> é parte importante da biblioteca <b>dos-like</b><br><br>
+
+<a href=https://github.com/mattiasgustavsson/dos-like>dos-like</a> é o repositório que inspirou e serviu de base para o software poly
+
+<h2>Game Over</h2>
+Para implementar o game-over pode ser necessário uma variavel.<br>
+Use o código para inicializar uma variável do tipo <b>int</b>
+<pre>int gameover;</pre>
+
+<h2>IF</h2>
+<pre>if(keystate(KEY_UP))gameover=1;</pre>
+Quando a tecla é pressionada a variável gameover <b>recebe</b> o valor 1<br><br>
+
+<h2>while ou diferente</h2>
+<pre>while(!keystate(KEY_ESCAPE)||gameover!=1)</pre>
+O jogo continua <b>enquanto</b> a tecla 'esq' não for pressionada <b>ou</b> a variável gameover for diferente de 1
+
+<h2>!</h2>
+Na linguagem C ! &nbsp;significa não<br>
+Na linguagem C != significa diferente<br>
+Na linguagem C == significa igual<br>
+Na linguagem C = &nbsp;significa <b>recebe</b>
+
+<h2>Função</h2>
+Para criar uma função:
+<pre>void init(){
+	gameover=0;
+	obstaculo=-250;
+}</pre>
+Para chamar/invocar a função:
+<pre>init();</pre>
+
+<h2>Resto da Divisão</h2>
+<pre>setcolor(12);
+obstaculo=(obstaculo+3)%300;
+int arrayObstaculo[6]={
+	282-obstaculo,98,
+	286-obstaculo,88,
+	290-obstaculo,98};
+fillpoly(arrayObstaculo,3);</pre>
+A variável obstaculo armazena a posição.<br>
+A variável arrayObstaculo armazena <b>coordenadas</b>.<br><br>
+
+<pre>obstaculo=(obstaculo+3)%300;</pre>
+A variavel obstáculo recebe<br>
+O resto da divisão do<br>
+valor da variável obstáculo mais três.<br>
+por trezentos<br><br>
+
+O resto da divisão por 300 sempre é um int positivo menor que 300.
+
+<h2>Delay</h2>
+<pre>sleep(20);</pre>
+A execução das instruções (código fonte processado)<br>
+é <b>pausada</b> por 20 milissegundos<br>
+depois é retomada (a partir de onde parou)
+
+<h2>Funções Poly</h2>
+<pre>void setcolor(int color);
+int getcolor();
+void putpixel(int x,int y,int color);
+void line(int x1,int y1,int x2,int y2);
+void rectangle(int x,int y,int w,int h);
+void bar(int x,int y,int w,int h);
+void circle(int x,int y,int r);
+void fillcircle(int x,int y,int r);
+void ellipse(int x,int y,int rx,int ry);
+void fillellipse(int x,int y,int rx,int ry);
+void drawpoly(int* points_xy,int count);
+void fillpoly(int* points_xy,int count);
+void floodfill(int x,int y);
+void boundaryfill(int x,int y,int boundary);
+void blitInt(int n,int x,int y);</pre>
+
+<h2>Tarefa</h2>
+Sua missão, caso você decida aceitar, será programar uma versão do jogo da cobrinha.
+</body>
+</html>
